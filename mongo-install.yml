@@ -1,0 +1,81 @@
+---
+- name: Install MongoDB on localhost.
+  hosts: localhost
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Check to make sure all required files are present.
+      file:
+        path: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
+        state: file
+        owner: root
+        mode: 644
+      loop:
+        - mongodb-compass-1.33.1-win32-x64.exe
+        - mongodb-database-tools-100.6.0.s390x.rpm
+        - mongodb-linux-390x-enterprise-rhel83-6.0.1.tgz
+        - mongodb-mongosh-1.5.4.s390x.rpm
+    
+    - name: Install cyrus-sasl dependency.
+      package:
+        name: cyrus-sasl
+        state: present
+
+    - name: Create mongodb system group.
+      group:
+        name: mongodb
+        system: yes
+
+    - name: Create a mongodb system user and add them to mongodb group.
+      user: 
+        name: mongod
+        system: yes
+        group: mongodb
+
+    - name: Extract MongoDB tarball to /u01.
+      unarchive:
+        src: /mnt/oraclenfs/oracode/mdb6/mongodb-linux-83-6.0.1.tgz
+        dest: /u01
+        list_files: yes
+
+    - name: Copy MongoDB binary files to /usr/local/sbin.
+      copy:
+        src: /u01/mongodb-linux-s390x-enterprise-rhel83-6.0.1/bin/*
+        dest: /usr/local/sbin
+
+    - name: Create MongoDB data and log directories and change their ownership to mongod:mongodb.
+      file:
+        state: directory
+        path: "{{ item }}"
+        owner: mongod
+        group: mongodb
+        recurse: yes
+      loop: 
+        - /var/lib/mongo
+        - /var/log/mongodb
+    
+    - name: Install mongosh and mongodb-database-tools rpms from local files.
+      yum:
+        name: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
+        state: present
+      loop:
+        - mongodb-mongosh-1.5.4.s390x.rpm
+        - mongodb-database-tools-100.6.0.s390x.rpm
+
+    - name: Run MongoDB Enterprise Edition.
+      shell: mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork--bind_ip_al
+      register: run_mongodb
+      failed_when: "'child process started successfully, parent exiting' not in run_mongodb.stdout"
+
+    - name: Verify MongoDB Enterprise Edition has started successfully.
+      shell: "more /var/log/mongodb/mongod.log | grep 'Waiting for connections'"
+      register: verify_mongodb
+      failed_when: "'Waiting for connections' not in verify_mongodb.stdout"
+    
+    - name: Check MongoDB version.
+      shell: "mongodb --version"
+      register: version_mongodb
+
+    - name: Display MongoDB version.
+      debug:
+        msg: "MongoDB version is {{ version_mongodb.stdout }}"
