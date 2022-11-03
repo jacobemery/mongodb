@@ -20,7 +20,7 @@
     - name: Debug 
       tags: test
       debug:
-        msg: "{{ install.results[0].files.path }}"
+        msg: "{{ install.results[0].files[0].path }}"
 
 #    - name: Set variables from required installation files for use later.
 #      set_fact:
