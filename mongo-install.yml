@@ -51,6 +51,7 @@
       copy:
         src: "/u01/{{ version.mongodb.split('/')[-1][:-4] }}/bin/{{ item }}"
         dest: "/usr/local/sbin/{{ item }}"
+        mode: 744
       loop:
         - install_compass
         - mongocryptd
