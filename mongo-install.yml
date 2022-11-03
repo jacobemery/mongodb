@@ -22,13 +22,13 @@
       debug:
         msg: "{{ install.results[0].files[0].path }}"
 
-#    - name: Set variables from required installation files for use later.
-#      set_fact:
-#        version:
-#          compass: 
-#          tools: 
-#          mongodb: 
-#          mongosh: 
+    - name: Set variables from required installation files for use later.
+      set_fact:
+        version:
+          compass: "{{ install.results[0].files[0].path }}"
+          tools: "{{ install.results[1].files[0].path }}"
+          mongodb: "{{ install.results[2].files[0].path }}"
+          mongosh: "{{ install.results[3].files[0].path }}"
 
     - name: Install cyrus-sasl dependency.
       package:
@@ -48,13 +48,13 @@
 
     - name: Extract MongoDB tarball to /u01.
       unarchive:
-        src: "/mnt/oraclenfs/oracode/mdb6/mongodb-linux-s390x-enterprise-rhel{{ rhel_version }}-{{ mongodb_version }}.tgz"
+        src: "/mnt/oraclenfs/oracode/mdb6/{{ version.mongodb }}"
         dest: /u01
         list_files: yes
 
     - name: Copy MongoDB binary files to /usr/local/sbin.
       copy:
-        src: "/u01/mongodb-linux-s390x-enterprise-rhel83-6.0.1/bin/{{ item }}"
+        src: "/u01/{{ version.mongodb }}/bin/{{ item }}"
         dest: "/usr/local/sbin/{{ item }}"
       loop:
         - install_compass
@@ -81,8 +81,8 @@
         name: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
         state: present
       loop:
-        - "mongodb-mongosh-{{ mongosh_version }}.s390x.rpm"
-        - "mongodb-database-tools-100.{{ db_tools_version }}.s390x.rpm"
+        - "{{ version.mongosh }}"
+        - "{{ version.tools }}"
 
     - name: Run MongoDB Enterprise Edition.
       shell: mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork--bind_ip_al
@@ -98,6 +98,6 @@
       shell: "mongodb --version"
       register: version_mongodb
 
-    - name: Display MongoDB version.
+    - name: Congratulations!
       debug:
-        msg: "MongoDB version is {{ version_mongodb.stdout }}"
+        msg: "MongoDB {{ version_mongodb.stdout }} installation complete."
