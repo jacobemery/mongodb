@@ -84,6 +84,7 @@
     - name: Make sure MongoDB isn't already running.
       shell: pidof mongod
       register: mongod_running
+      ignore_errors: yes
 
     - name: Run MongoDB Enterprise Edition.
       shell: /usr/local/sbin/mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork --bind_ip_all
