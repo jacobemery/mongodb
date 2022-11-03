@@ -3,24 +3,32 @@
   hosts: localhost
   gather_facts: true
   become: true
-  vars:
-    rhel_version: 83
-    compass_version: 1.33.1
-    db_tools_version: 6.0
-    mongodb_version: 6.0.1
-    mongosh_version: 1.5.4
   tasks:
     - name: Check to make sure all required files are present.
-      file:
-        path: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
-        state: file
-        owner: root
-        mode: 644
+      tags: test
+      find:
+        paths: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
+        file_type: file
+        patterns: "{{ item }}"
       loop:
-        - "mongodb-compass-{{ compass_version }}-win32-x64.exe"
-        - "mongodb-database-tools-100.{{ db_tools_version }}.s390x.rpm"
-        - "mongodb-linux-s390x-enterprise-rhel{{ rhel_version }}-{{ mongodb_version }}.tgz"
-        - "mongodb-mongosh-{{ mongosh_version }}.s390x.rpm"
+        - "mongodb-compass-*-win32-x64.exe"
+        - "mongodb-database-tools-100.*.s390x.rpm"
+        - "mongodb-linux-s390x-enterprise-rhel*.tgz"
+        - "mongodb-mongosh-*.s390x.rpm"
+      register: install_files
+
+    - name: Debug 
+      tags: test
+      debug:
+        msg: install_files.stdout
+
+    - name: Set variables from required installation files for use later.
+      set_fact:
+        version:
+          compass: 
+          tools: 
+          mongodb: 
+          mongosh: 
 
     - name: Install cyrus-sasl dependency.
       package:
