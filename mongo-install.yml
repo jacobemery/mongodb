@@ -58,7 +58,7 @@
         dest: "/usr/local/sbin/{{ item }}"
       loop:
         - install_compass
-        - mongocrytpd
+        - mongocryptd
         - mongod
         - mongodecrypt
         - mongokerberos
