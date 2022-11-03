@@ -7,7 +7,7 @@
     - name: Check to make sure all required files are present.
       tags: test
       find:
-        paths: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
+        paths: "/mnt/oraclenfs/oracode/mdb6"
         file_type: file
         patterns: "{{ item }}"
       loop:
@@ -20,7 +20,7 @@
     - name: Debug 
       tags: test
       debug:
-        msg: install_files.stdout
+        msg: "{{ install_files.stdout }}"
 
 #    - name: Set variables from required installation files for use later.
 #      set_fact:
