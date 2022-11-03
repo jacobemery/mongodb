@@ -3,6 +3,12 @@
   hosts: localhost
   gather_facts: true
   become: true
+  vars:
+    rhel_version: 83
+    compass_version: 1.33.1
+    db_tools_version: 6.0
+    mongodb_version: 6.0.1
+    mongosh_version: 1.5.4
   tasks:
     - name: Check to make sure all required files are present.
       file:
@@ -11,11 +17,11 @@
         owner: root
         mode: 644
       loop:
-        - mongodb-compass-1.33.1-win32-x64.exe
-        - mongodb-database-tools-100.6.0.s390x.rpm
-        - mongodb-linux-390x-enterprise-rhel83-6.0.1.tgz
-        - mongodb-mongosh-1.5.4.s390x.rpm
-    
+        - "mongodb-compass-{{ compass_version }}-win32-x64.exe"
+        - "mongodb-database-tools-100.{{ db_tools_version }}.s390x.rpm"
+        - "mongodb-linux-s390x-enterprise-rhel{{ rhel_version }}-{{ mongodb_version }}.tgz"
+        - "mongodb-mongosh-{{ mongosh_version }}.s390x.rpm"
+
     - name: Install cyrus-sasl dependency.
       package:
         name: cyrus-sasl
@@ -27,21 +33,29 @@
         system: yes
 
     - name: Create a mongodb system user and add them to mongodb group.
-      user: 
+      user:
         name: mongod
         system: yes
         group: mongodb
 
     - name: Extract MongoDB tarball to /u01.
       unarchive:
-        src: /mnt/oraclenfs/oracode/mdb6/mongodb-linux-83-6.0.1.tgz
+        src: "/mnt/oraclenfs/oracode/mdb6/mongodb-linux-s390x-enterprise-rhel{{ rhel_version }}-{{ mongodb_version }}.tgz"
         dest: /u01
         list_files: yes
 
     - name: Copy MongoDB binary files to /usr/local/sbin.
       copy:
-        src: /u01/mongodb-linux-s390x-enterprise-rhel83-6.0.1/bin/*
-        dest: /usr/local/sbin
+        src: "/u01/mongodb-linux-s390x-enterprise-rhel83-6.0.1/bin/{{ item }}"
+        dest: "/usr/local/sbin/{{ item }}"
+      loop:
+        - install_compass
+        - mongocrytpd
+        - mongod
+        - mongodecrypt
+        - mongokerberos
+        - mongoldap
+        - mongos
 
     - name: Create MongoDB data and log directories and change their ownership to mongod:mongodb.
       file:
@@ -50,17 +64,17 @@
         owner: mongod
         group: mongodb
         recurse: yes
-      loop: 
+      loop:
         - /var/lib/mongo
         - /var/log/mongodb
-    
+
     - name: Install mongosh and mongodb-database-tools rpms from local files.
       yum:
         name: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
         state: present
       loop:
-        - mongodb-mongosh-1.5.4.s390x.rpm
-        - mongodb-database-tools-100.6.0.s390x.rpm
+        - "mongodb-mongosh-{{ mongosh_version }}.s390x.rpm"
+        - "mongodb-database-tools-100.{{ db_tools_version }}.s390x.rpm"
 
     - name: Run MongoDB Enterprise Edition.
       shell: mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork--bind_ip_al
@@ -71,7 +85,7 @@
       shell: "more /var/log/mongodb/mongod.log | grep 'Waiting for connections'"
       register: verify_mongodb
       failed_when: "'Waiting for connections' not in verify_mongodb.stdout"
-    
+
     - name: Check MongoDB version.
       shell: "mongodb --version"
       register: version_mongodb
