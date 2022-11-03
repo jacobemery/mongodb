@@ -48,13 +48,13 @@
 
     - name: Extract MongoDB tarball to /u01.
       unarchive:
-        src: "/mnt/oraclenfs/oracode/mdb6/{{ version.mongodb }}"
+        src: "{{ version.mongodb }}"
         dest: /u01
         list_files: yes
 
     - name: Copy MongoDB binary files to /usr/local/sbin.
       copy:
-        src: "/u01/{{ version.mongodb }}/bin/{{ item }}"
+        src: "/u01/{{ version.mongodb.split('/')[-1] }}/bin/{{ item }}"
         dest: "/usr/local/sbin/{{ item }}"
       loop:
         - install_compass
@@ -78,7 +78,7 @@
 
     - name: Install mongosh and mongodb-database-tools rpms from local files.
       yum:
-        name: "/mnt/oraclenfs/oracode/mdb6/{{ item }}"
+        name: "{{ item }}"
         state: present
       loop:
         - "{{ version.mongosh }}"
