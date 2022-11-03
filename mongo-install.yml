@@ -54,7 +54,7 @@
 
     - name: Copy MongoDB binary files to /usr/local/sbin.
       copy:
-        src: "/u01/{{ version.mongodb.split('/')[-1] }}/bin/{{ item }}"
+        src: "/u01/{{ version.mongodb.split('/')[-1][:-4] }}/bin/{{ item }}"
         dest: "/usr/local/sbin/{{ item }}"
       loop:
         - install_compass
