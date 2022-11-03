@@ -15,12 +15,12 @@
         - "mongodb-database-tools-100.*.s390x.rpm"
         - "mongodb-linux-s390x-enterprise-rhel*.tgz"
         - "mongodb-mongosh-*.s390x.rpm"
-      register: install_files
+      register: install
 
     - name: Debug 
       tags: test
       debug:
-        msg: "{{ install_files.stdout }}"
+        msg: "{{ install.files }}"
 
 #    - name: Set variables from required installation files for use later.
 #      set_fact:
