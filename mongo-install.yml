@@ -22,13 +22,13 @@
       debug:
         msg: install_files.stdout
 
-    - name: Set variables from required installation files for use later.
-      set_fact:
-        version:
-          compass: 
-          tools: 
-          mongodb: 
-          mongosh: 
+#    - name: Set variables from required installation files for use later.
+#      set_fact:
+#        version:
+#          compass: 
+#          tools: 
+#          mongodb: 
+#          mongosh: 
 
     - name: Install cyrus-sasl dependency.
       package:
