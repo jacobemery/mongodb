@@ -8,10 +8,10 @@
       tags: debug
       service_facts:
 
-    - name: Print services check
-      tags: debug
-      debug:
-        msg: "{{ ansible_facts.services['mongod.service'].state }}"
+#    - name: Print services check
+#      tags: debug
+#      debug:
+#        msg: "{{ ansible_facts.services['mongod.service'].state }}"
 
     - name: Stop mongod service.
       tags: debug
