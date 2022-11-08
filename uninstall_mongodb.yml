@@ -15,6 +15,7 @@
         msg: "{{ services_check }}"
 
     - name: Stop mongod service.
+      tags: debug
       service:
         name: mongod
         state: stopped
