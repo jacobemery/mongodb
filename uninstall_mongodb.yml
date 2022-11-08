@@ -6,12 +6,17 @@
   tasks:
     - name: Gather info about installed services.
       service_facts:
+      register: services_check
+
+    - name: Print services Check
+      debug:
+        msg: services_check.stdout
 
     - name: Stop mongod service.
       service:
         name: mongod
         state: stopped
-      when: "'mongod' in services"
+      when: "'mongod' in services_check.stdout"
     
     - name: Uninstall MongoDB.
       dnf:

@@ -17,13 +17,13 @@
         - "mongodb-mongosh-*.s390x.rpm"
       register: install
 
-    - name: Set variables from required installation files for use later.
-      set_fact:
-        version:
-          compass: "{{ install.results[0].files[0].path }}"
-          tools: "{{ install.results[1].files[0].path }}"
-          mongodb: "{{ install.results[2].files[0].path }}"
-          mongosh: "{{ install.results[3].files[0].path }}"
+#    - name: Set variables from required installation files for use later.
+#      set_fact:
+#        version:
+#          compass: "{{ install.results[0].files[0].path }}"
+#          tools: "{{ install.results[1].files[0].path }}"
+#          mongodb: "{{ install.results[2].files[0].path }}"
+#          mongosh: "{{ install.results[3].files[0].path }}"
 
     - name: Create repo file for mongodb-enterprise-6.0
       template:
