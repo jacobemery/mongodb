@@ -1,0 +1,27 @@
+---
+- name: Uninstall MongoDB on localhost.
+  hosts: localhost
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Stop mongod service.
+      service:
+        name: mongod
+        state: stopped
+    
+    - name: Uninstall MongoDB.
+      package:
+        name: mongodb-enterprise
+        state: absent
+    
+    - name: Remove data and log directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /var/log/mongodb 
+        - /var/lib/mongo 
+
+    - name: Done.
+      debug:
+        msg: "MongoDB has been uninstalled successfully."
