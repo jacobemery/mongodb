@@ -20,7 +20,7 @@
         state: stopped
       when: 
         - ansible_facts.services['mongod.service'].state == 'running' and
-        - mongod.service in ansible_facts.services
+        - "'mongod.service' in ansible_facts.services"
 
     - name: Uninstall MongoDB.
       dnf:
