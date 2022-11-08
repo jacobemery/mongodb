@@ -12,13 +12,13 @@
     - name: Print services Check
       tags: debug
       debug:
-        msg: "{{ services_check.results }}"
+        msg: "{{ services_check }}"
 
     - name: Stop mongod service.
       service:
         name: mongod
         state: stopped
-      when: "'mongod' in services_check.results"
+      when: "'mongod' in services_check"
     
     - name: Uninstall MongoDB.
       dnf:
