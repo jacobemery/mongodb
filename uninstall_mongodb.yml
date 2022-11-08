@@ -8,17 +8,18 @@
       tags: debug
       service_facts:
 
-    - name: Print services Check
+    - name: Print services check
       tags: debug
       debug:
-        msg: "{{ ansible_facts.services['mongod'] }}"
+        msg: "{{ ansible_facts.services['mongod.service'].state }}"
 
     - name: Stop mongod service.
       tags: debug
       service:
         name: mongod
         state: stopped
-      when: "'mongod' in services_check"
+      when: "'ansible_facts.services['mongod.service'].state' == 'running'"
+
     
     - name: Uninstall MongoDB.
       dnf:
