@@ -4,10 +4,14 @@
   gather_facts: true
   become: true
   tasks:
+    - name: Gather info about installed services.
+      service_facts:
+
     - name: Stop mongod service.
       service:
         name: mongod
         state: stopped
+      when: "'mongod' in services"
     
     - name: Uninstall MongoDB.
       dnf:
