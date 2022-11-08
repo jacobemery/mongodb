@@ -4,23 +4,13 @@
   gather_facts: true
   become: true
   tasks:
-    - name: Gather info about installed services.
-      tags: debug
-      service_facts:
-
-    - name: Print services check
-      tags: debug
-      debug:
-        msg: "{{ ansible_facts.services['mongod.service'].state }}"
-
     - name: Stop mongod service.
-      tags: debug
       service:
         name: mongod
         state: stopped
-      when: "'ansible_facts.services['mongod.service'].state' == 'running'"
+      register: service_status
+      failed_when: service_status|failed and not 'could not find the requested service' in service_status
 
-    
     - name: Uninstall MongoDB.
       dnf:
         name: mongodb-enterprise
