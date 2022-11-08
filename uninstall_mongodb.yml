@@ -18,7 +18,8 @@
       service:
         name: mongod
         state: stopped
-      when: mongod.service in ansible_facts.services
+#      when: mongod.service in ansible_facts.services
+      when: not ansible_facts.services is search("mongod.service")
 
     - name: Uninstall MongoDB.
       dnf:
