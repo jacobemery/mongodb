@@ -10,9 +10,9 @@
         state: stopped
     
     - name: Uninstall MongoDB.
-      package:
+      dnf:
         name: mongodb-enterprise
-        state: absent
+        state: removed
     
     - name: Remove data and log directories
       file:
