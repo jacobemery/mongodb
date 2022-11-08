@@ -5,12 +5,14 @@
   become: true
   tasks:
     - name: Gather info about installed services.
+      tags: debug
       service_facts:
       register: services_check
 
     - name: Print services Check
+      tags: debug
       debug:
-        msg: services_check.stdout
+        msg: "{{ services_check.stdout }}"
 
     - name: Stop mongod service.
       service:
