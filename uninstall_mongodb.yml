@@ -12,7 +12,7 @@
     - name: Uninstall MongoDB.
       dnf:
         name: mongodb-enterprise
-        state: removed
+        state: absent
         autoremove: yes
     
     - name: Remove data and log directories
