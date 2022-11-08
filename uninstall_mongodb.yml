@@ -7,12 +7,11 @@
     - name: Gather info about installed services.
       tags: debug
       service_facts:
-      register: services_check
 
     - name: Print services Check
       tags: debug
       debug:
-        msg: "{{ services_check }}"
+        msg: "{{ ansible_facts.services['mongod'] }}"
 
     - name: Stop mongod service.
       tags: debug
