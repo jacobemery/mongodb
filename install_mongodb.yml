@@ -36,13 +36,6 @@
     - name: Print mongod version.
       debug:
         msg: mongod_version.stdout
-
-    - name: Set bindIP to 0.0.0.0 in mongod.conf
-      lineinfile:
-        path: /etc/mongod.conf
-        line: "  bindIp: 0.0.0.0"
-        search_string: "bindIp"
-        backup: yes
     
     - name: Verify MongoDB Enterprise Edition installed successfully.
       shell: "more /var/log/mongodb/mongod.log | grep 'Waiting for connections'"
