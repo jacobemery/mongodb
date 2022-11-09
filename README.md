@@ -12,7 +12,7 @@ git clone https://github.com/jacobemery/mongodb_lab.git
 ~~~
 cd mongodb_lab 
 ~~~
-Install MongoDB Enterprise:
+Install MongoDB Enterprise, run as root:
 ~~~
 ansible-playbook install_mongodb.yml 
 ~~~
