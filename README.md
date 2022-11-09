@@ -1,4 +1,4 @@
-# Ansible playbooks to install and uninstall MongoDB for WSC lab
+# Ansible playbooks to install and uninstall MongoDB
 
 ## 1) Install Ansible: 
 ~~~
