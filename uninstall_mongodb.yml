@@ -1,34 +1,34 @@
 ---
 - name: Uninstall MongoDB on localhost.
-  hosts: localhost
+  hosts: db_servers
   gather_facts: true
   become: true
   tasks:
     - name: Gather info about installed services.
       tags: debug
-      service_facts:
+      ansible.builtin.service_facts:
 
     - name: Stop mongod service.
       tags: debug
-      service:
+      ansible.builtin.service:
         name: mongod
         state: stopped
       when: ansible_facts.services is search("mongod.service")
 
     - name: Uninstall MongoDB.
-      dnf:
+      ansible.builtin.dnf:
         name: mongodb-enterprise
         state: absent
-        autoremove: yes
-    
+        autoremove: true
+
     - name: Remove data and log directories
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: absent
       loop:
-        - /var/log/mongodb 
-        - /var/lib/mongo 
+        - /var/log/mongodb
+        - /var/lib/mongo
 
-    - name: Done.
-      debug:
+    - name: Uninstall complete.
+      ansible.builtin.debug:
         msg: "MongoDB has been uninstalled successfully."
