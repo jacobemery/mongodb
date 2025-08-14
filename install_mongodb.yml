@@ -32,7 +32,7 @@
 
     - name: Print mongod status.
       ansible.builtin.debug:
-        msg: "{{ mongod_check.stdout }}"
+        var: mongod_check.stdout
 
     - name: Check mongod version.
       ansible.builtin.command: mongod --version

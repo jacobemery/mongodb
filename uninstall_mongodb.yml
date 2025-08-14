@@ -29,6 +29,17 @@
         - /var/log/mongodb
         - /var/lib/mongo
 
+    - name: Check mongod status, fail if still active.
+      ansible.builtin.systemd:
+        name: mongod
+      register: mongod_check
+      changed_when: false
+      failed_when: mongod_check.status.ActiveState == 'active'
+
+    - name: Print mongod status for verification.
+      ansible.builtin.debug:
+        var: mongod_check.stdout
+
     - name: Uninstall complete.
       ansible.builtin.debug:
         msg: "MongoDB has been uninstalled successfully."
