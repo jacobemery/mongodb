@@ -42,9 +42,9 @@
 
     - name: Print mongod version for verification.
       ansible.builtin.debug:
-        var: mongod_version.stdout_lines
+        msg: "{{ (mongod_version.stdout_lines[1:] | join('\n') | from_json).version }}"
 
-    - name: Verify MongoDB Enterprise Edition is ready
+    - name: Verify MongoDB Enterprise Edition is ready and waiting for connections.
       ansible.builtin.wait_for:
         path: /var/log/mongodb/mongod.log
         search_regex: 'Waiting for connections'
