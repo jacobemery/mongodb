@@ -13,9 +13,10 @@
         mode: '0644'
 
     - name: Install mongodb-enterprise.
-      ansible.builtin.package:
-        name: "mongodb-enterprise-{{ mongodb_version }}"
+      ansible.builtin.dnf:
+        name: mongodb-enterprise-{{ mongodb_version }}
         state: present
+        update_cache: true
 
     - name: Start mongod service.
       ansible.builtin.service:
