@@ -30,9 +30,9 @@
       changed_when: false
       failed_when: mongod_check.status.ActiveState != 'active'
 
-    - name: Print mongod status.
+    - name: Print mongod status for verification.
       ansible.builtin.debug:
-        var: mongod_check.stdout
+        var: mongod_check.ActiveState
 
     - name: Check mongod version.
       ansible.builtin.command: mongod --version
@@ -40,9 +40,9 @@
       changed_when: false
       failed_when: mongodb_version not in mongod_version.stdout
 
-    - name: Print mongod version.
+    - name: Print mongod version for verification.
       ansible.builtin.debug:
-        var: mongod_version
+        var: mongod_version.stdout_lines
 
     - name: Verify MongoDB Enterprise Edition is ready
       ansible.builtin.wait_for:
