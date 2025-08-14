@@ -29,6 +29,8 @@
         - /var/log/mongodb
         - /var/lib/mongo
         - "{{ lookup('ansible.builtin.fileglob', '/etc/yum.repos.d/mongodb-enterprise-*.repo', wantlist=True) }}"
+      loop_control:
+        flatten: true
 
     - name: Check mongod status, fail if still active.
       ansible.builtin.systemd:
