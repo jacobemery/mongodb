@@ -28,9 +28,21 @@
       loop:
         - /var/log/mongodb
         - /var/lib/mongo
-        - "{{ lookup('ansible.builtin.fileglob', '/etc/yum.repos.d/mongodb-enterprise-*.repo', wantlist=True) }}"
-      loop_control:
-        flatten: true
+
+    - name: Find any leftover MongoDB repo files.
+      ansible.builtin.find:
+        paths: /etc/yum.repos.d
+        patterns:
+          - "mongodb-enterprise-*.repo"
+        file_type: file
+      register: mongo_repo_files
+
+    - name: Remove leftover MongoDB repo files
+      when: (mongo_repo_files.matched | default(0)) > 0
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ mongo_repo_files.files }}"
 
     - name: Check mongod status, fail if still active.
       ansible.builtin.systemd:
