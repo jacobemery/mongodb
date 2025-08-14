@@ -4,6 +4,24 @@
   gather_facts: true
   become: true
   tasks:
+
+    - name: Find any MongoDB repo files for idempotency.
+      ansible.builtin.find:
+        paths: /etc/yum.repos.d
+        patterns:
+          - "mongodb-enterprise-*.repo"
+        file_type: file
+      register: mongo_repo_files
+
+    - name: Remove any MongoDB repo files for idempotency.
+      when: (mongo_repo_files.matched | default(0)) > 0
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ mongo_repo_files.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
     - name: Create repo file for mongodb-enterprise.
       ansible.builtin.template:
         src: mongodb-enterprise.repo.j2
