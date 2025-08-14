@@ -14,7 +14,7 @@
 
     - name: Install mongodb-enterprise.
       ansible.builtin.package:
-        name: mongodb-enterprise
+        name: "mongodb-enterprise-{{ mongodb_version }}"
         state: present
 
     - name: Start mongod service.
