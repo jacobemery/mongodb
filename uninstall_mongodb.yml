@@ -43,6 +43,8 @@
         path: "{{ item.path }}"
         state: absent
       loop: "{{ mongo_repo_files.files }}"
+      loop_control:
+        label: "{{ item.path }}"
 
     - name: Check mongod status, fail if still active.
       ansible.builtin.systemd:
