@@ -42,7 +42,7 @@
 
     - name: Print mongod version.
       ansible.builtin.debug:
-        msg: mongod_version.stdout
+        var: mongod_version
 
     - name: Verify MongoDB Enterprise Edition is ready
       ansible.builtin.wait_for:
