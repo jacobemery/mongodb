@@ -53,4 +53,4 @@
 
     - name: Congratulations!
       ansible.builtin.debug:
-        msg: "MongoDB installation complete. {{ mongod_version.stdout_lines[0] }} is {{ mongod_version.stdout_lines[0] }}."
+        msg: "MongoDB installation complete. {{ mongod_version.stdout_lines[0] }} is {{ mongod_check.status.ActiveState }}."
