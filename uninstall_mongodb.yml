@@ -38,7 +38,7 @@
 
     - name: Print mongod status for verification.
       ansible.builtin.debug:
-        var: mongod_check.stdout
+        var: mongod_check.status.ActiveState
 
     - name: Uninstall complete.
       ansible.builtin.debug:

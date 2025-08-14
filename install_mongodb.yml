@@ -32,7 +32,7 @@
 
     - name: Print mongod status for verification.
       ansible.builtin.debug:
-        var: mongod_check.ActiveState
+        var: mongod_check.status.ActiveState
 
     - name: Check mongod version.
       ansible.builtin.command: mongod --version
