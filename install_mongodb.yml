@@ -32,7 +32,7 @@
 
     - name: Print mongod status for verification.
       ansible.builtin.debug:
-        var: mongod_check.status.ActiveState
+        msg: "{{ mongod_check.status.ActiveState }}"
 
     - name: Check mongod version.
       ansible.builtin.command: mongod --version
@@ -42,7 +42,7 @@
 
     - name: Print mongod version for verification.
       ansible.builtin.debug:
-        var: mongod_version.stdout_lines[0]
+        msg: "{{ mongod_version.stdout_lines[0] }}"
 
     - name: Verify MongoDB Enterprise Edition is ready and waiting for connections.
       ansible.builtin.wait_for:
