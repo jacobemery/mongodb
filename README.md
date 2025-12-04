@@ -38,7 +38,7 @@ Optionally, specify the desired major.minor version (default version is 8.2), i.
 ~~~
 ansible-playbook install.yml -e version=8.0
 ~~~
-To get more output, add -v for verbosity, more Vs = more output, i.e.
+Optionally, to get more output, (helpful for debugging) add -v for verbosity, more Vs = more output, i.e.
 ~~~
 ansible-playbook install.yml -vvv
 ~~~
