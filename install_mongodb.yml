@@ -1,21 +1,34 @@
 ---
-- name: Install MongoDB on localhost.
+- name: Install MongoDB.
   hosts: db_servers
   gather_facts: true
   become: true
+  vars:
+    mongodb_version: "{{ version | default('8.2') }}"
+    mongodb_repo_name: "mongodb-enterprise-{{ mongodb_version }}"
+    mongodb_pkg_name: "mongodb-enterprise{{ '-server' if ansible_distribution_major_version | int >= 9 }}"
   tasks:
 
-    - name: Create repo file for mongodb-enterprise.
+    - name: Remove potentially outdated MongoDB repo files.
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop: >-
+        {{ query('ansible.builtin.fileglob', '/etc/yum.repos.d/mongodb*')
+           | reject('search', mongodb_repo_name ~ '.repo')
+           | list }}
+
+    - name: "Create repo file for {{ mongodb_repo_name }}"
       ansible.builtin.template:
         src: mongodb-enterprise.repo.j2
-        dest: "/etc/yum.repos.d/mongodb-enterprise-{{ mongodb_version }}.repo"
+        dest: "/etc/yum.repos.d/{{ mongodb_repo_name }}.repo"
         owner: root
         group: root
         mode: '0644'
 
-    - name: Install mongodb-enterprise.
+    - name: "Install mongodb-entprise {{ mongodb_version }}"
       ansible.builtin.dnf:
-        name: mongodb-enterprise
+        name: "{{ mongodb_pkg_name }}"
         state: present
 
     - name: Start mongod service.

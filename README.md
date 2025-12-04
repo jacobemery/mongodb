@@ -1,22 +1,26 @@
 # Ansible playbooks to install and uninstall MongoDB
 
-## 1) Install Ansible: 
+## 1) Become root
 ~~~
-pip3 install ansible 
+sudo -i
+~~
+## 2) Install Ansible:
 ~~~
-## 2) Clone this repository: 
+pip3 install ansible
 ~~~
-git clone https://github.com/jacobemery/mongodb_lab.git 
+## 3) Clone this repository:
 ~~~
-## 3) Run the playbooks:
+git clone https://github.com/jacobemery/mongodb.git
 ~~~
-cd mongodb_lab 
+## 4) Open the folder:
 ~~~
-Install MongoDB Enterprise, run as root:
+cd mongodb
 ~~~
-ansible-playbook install_mongodb.yml 
+## 5) Install MongoDB Enterprise, run as root. Optionally, specify the major.minor version (default is 8.2):
 ~~~
-Uninstall: 
+ansible-playbook install_mongodb.yml -e version=8.0
+~~~
+To uninstall:
 ~~~
 ansible-playbook uninstall_mongodb.yml
 ~~~

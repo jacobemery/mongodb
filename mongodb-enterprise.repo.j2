@@ -3,4 +3,4 @@ name=MongoDB Enterprise Repository
 baseurl=https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/{{ mongodb_version }}/$basearch/
 gpgcheck=1
 enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
+gpgkey=https://www.mongodb.org/static/pgp/server-{{ (mongodb_version.split('.')[0]) ~ '.0' }}.asc
