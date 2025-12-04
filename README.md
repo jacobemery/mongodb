@@ -1,14 +1,20 @@
 # Ansible playbooks to install and uninstall MongoDB
 
+Assumptions:
+- This is running directly on a Red Hat Enterprise Linux (RHEL) server.
+- You have passwordless sudo access.
+- This is not a production server.
+
 ## 1) Become root
 ~~~
 sudo -i
 ~~~
-## 2) Install Ansible:
+## 2) Install git
+### Will only install if you don't have it already
 ~~~
-pip3 install ansible
+command -v git >/dev/null 2>&1 && echo "git already installed" || sudo dnf install -y git || sudo dnf install -y git
 ~~~
-## 3) Clone this repository:
+## 3) Clone this git repository:
 ~~~
 git clone https://github.com/jacobemery/mongodb.git
 ~~~
@@ -16,7 +22,11 @@ git clone https://github.com/jacobemery/mongodb.git
 ~~~
 cd mongodb
 ~~~
-## 5) Install MongoDB Enterprise.
+### 5) Run the setup script to install Ansible pre-reqs
+~~~
+./setup.sh
+~~~
+## 6) Install MongoDB Enterprise.
 ### Optionally, specify the major.minor version (default is 8.2):
 ~~~
 ansible-playbook install_mongodb.yml -e version=8.0
