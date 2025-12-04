@@ -27,7 +27,7 @@ cd mongodb
 chmod +x setup.sh && ./setup.sh
 ~~~
 ## 6) Install MongoDB Enterprise.
-### Optionally, specify the major.minor version (default is 8.2):
+### Optionally, specify the desired major.minor version (default version is 8.2):
 ~~~
 ansible-playbook install_mongodb.yml -e version=8.0
 ~~~
