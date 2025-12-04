@@ -5,7 +5,7 @@ This is a very simple, quick and dirty (somewhat) automated install process for 
 Assumptions:
 - This is running directly on a Red Hat Enterprise Linux (RHEL) server (tested on RHEL 8 & 9).
 - You have passwordless sudo access.
-- This is not a production server.
+- This is not a production server. This is an opinionated install, so if there's actual important workload on the server you're installing to, make sure this won't mess things up for you.
 
 ## 1) Become root
 ~~~
