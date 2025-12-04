@@ -1,4 +1,4 @@
-# Ansible playbooks to install and uninstall MongoDB
+# Automated install of MongoDB Enterprise on IBM Z & LinuxONE
 
 ### Summary
 This is a quick and dirty automated install process for MongoDB on s390x (IBM Z & LinuxONE) servers. It's needed because mongodb-enterprise is not included in the OS base repository. Hope it helps!
