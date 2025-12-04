@@ -12,7 +12,7 @@ Assumptions:
 sudo -i
 ~~~
 ## 2) Install git
-### Will only install if you don't have it already
+Will only install if you don't have it already
 ~~~
 command -v git >/dev/null 2>&1 && echo "git already installed" || sudo dnf install -y git
 ~~~
@@ -25,16 +25,24 @@ git clone https://github.com/jacobemery/mongodb.git
 cd mongodb
 ~~~
 ### 5) Run the setup script to install pre-reqs (Ansible & Python)
-### Will only install if you don't have them already
+Will only install if you don't have them already
 ~~~
 chmod +x setup.sh && ./setup.sh
 ~~~
-## 6) Install MongoDB Enterprise.
-### Optionally, specify the desired major.minor version (default version is 8.2):
+## 6) Run the playbooks:
+To install MongoDB Enterprise with Ansible with defaults:
 ~~~
-ansible-playbook install_mongodb.yml -e version=8.0
+ansible-playbook install.yml
 ~~~
-### To uninstall:
+Optionally, specify the desired major.minor version (default version is 8.2), i.e.
 ~~~
-ansible-playbook uninstall_mongodb.yml
+ansible-playbook install.yml -e version=8.0
+~~~
+To get more output, add -v for verbosity, more Vs = more output, i.e.
+~~~
+ansible-playbook install.yml -vvv
+~~~
+To uninstall:
+~~~
+ansible-playbook uninstall.yml
 ~~~
