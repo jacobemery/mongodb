@@ -14,7 +14,7 @@ sudo -i
 ## 2) Install git
 ### Will only install if you don't have it already
 ~~~
-command -v git >/dev/null 2>&1 && echo "git already installed" || sudo dnf install -y git || sudo dnf install -y git
+command -v git >/dev/null 2>&1 && echo "git already installed" || sudo dnf install -y git
 ~~~
 ## 3) Clone this git repository:
 ~~~
