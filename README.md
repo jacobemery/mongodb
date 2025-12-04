@@ -16,7 +16,8 @@ git clone https://github.com/jacobemery/mongodb.git
 ~~~
 cd mongodb
 ~~~
-## 5) Install MongoDB Enterprise, run as root. Optionally, specify the major.minor version (default is 8.2):
+## 5) Install MongoDB Enterprise.
+Optionally, specify the major.minor version (default is 8.2):
 ~~~
 ansible-playbook install_mongodb.yml -e version=8.0
 ~~~
