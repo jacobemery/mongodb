@@ -3,7 +3,7 @@
 ## 1) Become root
 ~~~
 sudo -i
-~~
+~~~
 ## 2) Install Ansible:
 ~~~
 pip3 install ansible
