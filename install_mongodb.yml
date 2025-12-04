@@ -6,7 +6,7 @@
   vars:
     mongodb_version: "{{ version | default('8.2') }}"
     mongodb_repo_name: "mongodb-enterprise-{{ mongodb_version }}"
-    mongodb_pkg_name: "mongodb-enterprise{{ '-server' if ansible_distribution_major_version | int >= 9 }}"
+    mongodb_pkg_name: "mongodb-enterprise{{ '-server' if ansible_distribution_major_version | int >= 9 else '' }}"
     mongosh_version: 2.5.10
   tasks:
 
