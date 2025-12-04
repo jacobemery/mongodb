@@ -18,7 +18,7 @@ command -v git >/dev/null 2>&1 && echo "git already installed" || sudo dnf insta
 ~~~
 git clone https://github.com/jacobemery/mongodb.git
 ~~~
-## 4) Open the folder:
+## 4) Open the cloned folder:
 ~~~
 cd mongodb
 ~~~
