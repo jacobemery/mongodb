@@ -23,6 +23,7 @@ git clone https://github.com/jacobemery/mongodb.git
 cd mongodb
 ~~~
 ### 5) Run the setup script to install pre-reqs (Ansible & Python)
+### Will only install if you don't have them already
 ~~~
 chmod +x setup.sh && ./setup.sh
 ~~~
