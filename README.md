@@ -22,9 +22,9 @@ git clone https://github.com/jacobemery/mongodb.git
 ~~~
 cd mongodb
 ~~~
-### 5) Run the setup script to install Ansible pre-reqs
+### 5) Run the setup script to install pre-reqs (Ansible & Python)
 ~~~
-./setup.sh
+chmod +x setup.sh && ./setup.sh
 ~~~
 ## 6) Install MongoDB Enterprise.
 ### Optionally, specify the major.minor version (default is 8.2):
