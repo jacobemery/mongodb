@@ -1,6 +1,6 @@
 # Ansible playbooks to install and uninstall MongoDB
 
-This is a quick and dirty automated install process for MongoDB on s390x (IBM Z & LinuxONE) servers. It's needed because mongodb-enterprise is not included in the OS base repository. Hope it helps!
+Summary: This is a quick and dirty automated install process for MongoDB on s390x (IBM Z & LinuxONE) servers. It's needed because mongodb-enterprise is not included in the OS base repository. Hope it helps!
 
 Assumptions:
 - This is running directly on a Red Hat Enterprise Linux (RHEL) server (tested on RHEL 8 & 9). You can run it from a remote controller, or against multiple servers, you'd just need to make some changes to the `inventory.ini` file.
