@@ -31,7 +31,7 @@ if command -v ansible-playbook >/dev/null 2>&1; then
 else
   echo "[*] Installing epel and ansible..."
   sudo dnf install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-${rhel_major}.noarch.rpm"
-  sudo dnf install -y python39 ansible
+  sudo dnf install -y ansible
   changed=true
 fi
 
