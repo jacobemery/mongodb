@@ -1,7 +1,7 @@
 # Ansible playbooks to install and uninstall MongoDB
 
 Assumptions:
-- This is running directly on a Red Hat Enterprise Linux (RHEL) server.
+- This is running directly on a Red Hat Enterprise Linux (RHEL) server (tested on RHEL 8 & 9).
 - You have passwordless sudo access.
 - This is not a production server.
 
