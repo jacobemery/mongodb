@@ -1,7 +1,7 @@
 # Automated install of MongoDB Enterprise on IBM Z & LinuxONE
 
 ### Summary
-This is a quick and dirty automated install process for MongoDB on s390x (IBM Z & LinuxONE) servers. It's needed because mongodb-enterprise is not included in the OS base repository. Hope it helps!
+This is a quick and dirty automated install process for MongoDB on RHEL on s390x (IBM Z & LinuxONE) servers. It's needed because mongodb-enterprise is not included in the OS base repository. Hope it helps!
 
 ### Assumptions
 - This is running directly on a Red Hat Enterprise Linux (RHEL) server (tested on RHEL 8.10 & 9.6). You can run it from a remote controller, or against multiple servers, you'd just need to make some changes to the `inventory.ini` file.
